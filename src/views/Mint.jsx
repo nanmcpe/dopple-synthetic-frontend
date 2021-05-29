@@ -60,24 +60,24 @@ const Mint = (props) => {
     const [lastTx, setLastTx] = useState('');
     const [number, setNumber] = useState('_ _ _ _ _ _');
     const [drawEvent, setDrawEvent] = useState({});
-    const { currentAccount, lotteryContract, syntheticContract, dollyContract, tokenContract, web3, alert } = useContext(Web3Context);
+    const { currentAccount, syntheticContract, dollyContract, tokenContract, web3, alert } = useContext(Web3Context);
 
     const { classes } = props;
 
     useEffect(() => {
         async function fetchData() {
             try {
-                if (lotteryContract.methods) {
+                if (syntheticContract.methods) {
                     const index = await syntheticContract.methods
                         .owner()
                         .call();
                     setOwner(index);
                 }
-                if (lotteryContract.events) {
+                if (syntheticContract.events) {
                     // console.log('web3Instance', web3Instance);
                     const lastestBlock = await web3.eth.getBlockNumber();
                     console.log('lastestBlock', lastestBlock);
-                    lotteryContract.events.Drawed({
+                    syntheticContract.events.Drawed({
                         fromBlock: lastestBlock
                     })
                         .on('connected', function (subscriptionId) {
@@ -109,7 +109,7 @@ const Mint = (props) => {
             try {
                 // const promises = [];
                 // for (let i = 0; i < 6; i++) {
-                //     promises.push(lotteryContract.methods
+                //     promises.push(syntheticContract.methods
                 //         .winningNumbers(0, 0, i)
                 //         .call());
                 // }

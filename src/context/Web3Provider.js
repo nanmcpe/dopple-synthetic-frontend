@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Web3 from 'web3';
-import { ThaiLottery } from '../abi/ThaiLotteryABI';
 import { Synthetic } from '../abi/SyntheticABI';
 import { Dolly } from '../abi/DollyABI';
 import { DoppleSyntheticToken } from '../abi/DoppleSyntheticTokenABI';
@@ -14,7 +13,6 @@ const Web3Provider = props => {
 
   const [currentAccount, setCurrentAccount] = useState('');
   const [currentNetworkID, setCurrentNetworkID] = useState(0);
-  const [lotteryContract, setlotteryContract] = useState({});
   const [syntheticContract, setSyntheticContract] = useState({});
   const [dollyContract, setDollyContract] = useState({});
   const [tokenContract, setTokenContract] = useState({});
@@ -25,10 +23,6 @@ const Web3Provider = props => {
       // let web3 = new Web3(window.ethereum);
       // const web3 = new Web3(Web3.givenProvider);
       await window.ethereum.request({ method: 'eth_requestAccounts' }); // get permission to access accounts
-      const lotteryAddress = '0x3d566B9f2Ed4a25d4681F9e79e2B22D8b0Cb8Fd0';
-      const mylotteryContract = new web3.eth.Contract(ThaiLottery, lotteryAddress);
-      setlotteryContract(mylotteryContract);
-
       const syntheticAddress = '0xb30931543733D7b2AeABa2CA25E8886a24888B38';
       const mySyntheticContract = new web3.eth.Contract(Synthetic, syntheticAddress);
       setSyntheticContract(mySyntheticContract);
@@ -90,7 +84,6 @@ const Web3Provider = props => {
     <Web3Context.Provider
       value={{
         currentAccount,
-        lotteryContract,
         syntheticContract,
         dollyContract,
         tokenContract,
